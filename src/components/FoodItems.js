@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import { FoodActions } from "../Redux/FoodActions";
+import { AddFoodById } from "../Redux/FoodActions";
 
 class FoodItems extends Component{
     render(){
@@ -11,11 +11,12 @@ class FoodItems extends Component{
                 <ul className="list-group">
                     {this.props.grocery.map((item) => {
                         return (
-                            <li key={item.id} className="list-group-item">
-                                <b>{item.name}</b> - 
-                                <span className="badge bg-warning text-dark">{item.weight} grams</span> - 
-                                <span className="badge bg-info text-dark">{item.calories} calories</span>
-                                
+                            <li key={item.id} 
+                                className="list-group-item"
+                                onClick={() => this.props.AddFoodById(item.id)}>
+                                    <b>{item.name}</b> - 
+                                    <span className="badge bg-warning text-dark">{item.weight} grams</span> - 
+                                    <span className="badge bg-info text-dark">{item.calories} calories</span> 
                             </li>
                         )
                     })}
@@ -25,11 +26,11 @@ class FoodItems extends Component{
     }
 }
 
-const mapStateToProps = (state) => {
+function mapStateToProps(state) {
     console.log(state);
     return {
-        grocery: state
+        grocery: state.grocery
     }
 }
 
-export default connect(mapStateToProps, { FoodActions })(FoodItems);
+export default connect(mapStateToProps, { AddFoodById })(FoodItems);
